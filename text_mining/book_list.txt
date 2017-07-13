@@ -1,0 +1,7 @@
+bartleby.txt
+pride_prej.txt
+dorian_gray.txt
+alice_in_wonderland.txt
+tale_of_two_cities.txt
+tom_sawyer.txt
+war_and_peace.txt
