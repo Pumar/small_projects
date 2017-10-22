@@ -6,48 +6,42 @@ yet there is no subset of those divisors that add up to the number itself.
 There are 100 rooms in the Hotel, what's your room number?
 """
 
+import math as mt 
+from itertools import *
 
-from math import sqrt
-import random
-def divisors(n):
-	divisors = []
-	for i in range(2, n/2+1 ):
+
+
+def finds_divisors(n):
+	div = []
+	for i in range(1,int(float(n)/2)+1):
 		if n%i == 0:
-			divisors.append(i)
-	return divisors
+			div.append(i)
+	return div
 
-def subset(lst):
-	for start in range(len(lst)-1):
-		for end in range(start+1,len(lst)-1):
-			yield lst[start:end+1]
+def sumSubsets(num,vet,tam):
+	total = int(mt.pow(2,tam))
 
-def all_possible(lst):
-	suml = []
-	psums = []
-	for l in range(20000):
-		for i in range(1,len(lst)+1):
-			for k in range(1,i+1):
-				rc = random.choice(lst)
-				if rc not in suml:
-					suml.append(rc)
-		if sum(suml) not in psums:
-			psums.append(sum(suml))
-	return psums
-def get_room_number(rooms):
-	for roomnr in range(1,rooms + 1):
-		div = divisors(roomnr)
-		psums = all_possible(div)
-		if sum(div) <= roomnr:
-			continue
-		elif roomnr not in psums:
-			print roomnr
-		"""
-		Found = False
-		for s in subset(div):
-			if sum(s) == div:
-				Found = True
-				break
-		if not Found:
-			return roomnr
-		"""
-get_room_number(100)
+	for i in range(1,total):
+		summ = 0
+		bit = i
+
+		for j in range(0,tam):
+			if (bit & 1) ==1:
+				summ += vet[j]
+			bit = bit >> 1
+		if summ == num:
+			return True
+	return False
+
+
+def findRoomnr(nr):
+	for i in range(1,nr+1):
+		vet = finds_divisors(i)
+
+		test = sumSubsets(i, vet, len(vet))
+		
+		if sum(vet)> i and test == False:
+			return i
+			
+
+print findRoomnr(100)
